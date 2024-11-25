@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Recipe Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <meta property="og:title" content="Recipe Manager - Your Ultimate Recipe Collection">
+    <meta property="og:description" content="Manage your recipes with ease and start your culinary journey today.">
+    <meta property="og:image" content="{% static 'images/og-image.jpg' %}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Recipe Manager</div>
+        <ul class="nav-links">
+            <li><a href="#" aria-label="Home">Home</a></li>
+            <li><a href="#" aria-label="Features">Features</a></li>
+            <li><a href="#" aria-label="About">About</a></li>
+            <li><a href="{% url 'contact' %}" aria-label="Contact">Contact</a></li>
+            <!-- Dynamic Login/Logout Button based on authentication status -->
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}" aria-label="Logout">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link login-btn" href="{% url 'login_us' %}" aria-label="Log In">Log In</a>
+            </li>
+            {% endif %}
+        </ul>
+
+        <!-- Hamburger Icon -->
+        <button class="navbar-toggle" id="navbar-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Main Content Block -->
+    <div class="content">
+        {% block content %} <!-- Child templates will insert their content here --> {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Recipe Manager. All rights reserved. Created By Ayush Chainani</p>
+    </footer>
+
+    <!-- JavaScript to toggle navbar on mobile -->
+    <script>
+        const navbarToggle = document.getElementById('navbar-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        navbarToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

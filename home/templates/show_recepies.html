@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Recipes</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Color Palette */
+    body {
+      background-color: #f9f9fb; /* Light Grayish Background */
+      color: #2c3e50; /* Dark Slate Text for readability */
+    }
+
+    .navbar {
+      background-color: #ff6f61; /* Warm Coral Navbar */
+    }
+
+    .navbar-brand, .nav-link {
+      color: #fff !important; /* White Text */
+    }
+
+    .navbar-brand:hover, .nav-link:hover {
+      color: #f1c40f !important; /* Golden Yellow Hover */
+    }
+
+    .card {
+      background-color: #ffffff; /* White Cards */
+      border: 1px solid #ddd; /* Light border */
+      border-radius: 10px; /* Rounded corners */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px); /* Subtle upward lift on hover */
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    }
+
+    .card-body {
+      background-color: #fefefe; /* Light background inside cards */
+    }
+
+    .modal-header {
+      background-color: #ff6f61; /* Coral header for modals */
+      color: white;
+    }
+
+    .modal-footer {
+      background-color: #f9f9fb; /* Light gray footer for modals */
+    }
+
+    .btn-secondary {
+      background-color: #ff6f61; /* Coral button */
+      border-color: #ff6f61;
+    }
+
+    .btn-secondary:hover {
+      background-color: #e55b4e; /* Darker coral on hover */
+    }
+
+    footer {
+      background-color: #ff6f61; /* Coral Footer */
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #f1c40f; /* Golden Yellow Links */
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Ensure cards are centered when only one recipe is available */
+    .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 400px; /* Limit the size of the card */
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        max-width: 90%; /* Adjust the max width on smaller screens */
+      }
+    }
+
+    .go-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .go-to-top:hover {
+      background-color: #e55b4e;
+      transform: translateY(-5px);
+    }
+
+    /* Update the Login and Logout Button Colors */
+    .navbar .nav-item .nav-link {
+      background-color: #e55b4e; /* Coral color for Login/Logout */
+      color: white; /* White text */
+      padding: 8px 16px; /* Padding for the buttons */
+      border-radius: 4px; /* Rounded corners for the buttons */
+      font-weight: bold; /* Bold text */
+    }
+
+    .navbar .nav-item .nav-link:hover {
+      background-color: #ff6f61; /* Lighter Coral on Hover */
+      color: white; /* Keep text white on hover */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Recipe Manager</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_recipe' %}">Add Recipe</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <h2>Recipes</h2>
+
+    <div class="row justify-content-center">
+      {% for recipe in recipes %}
+        <div class="col-md-4 mb-4">
+          <!-- Card for each recipe -->
+          <div class="card" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#recipeModal{{ recipe.id }}">
+            <img src="{{ recipe.recipe_img.url }}" alt="{{ recipe.recipe_name }}" class="card-img-top lazy" style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.recipe_name }}</h5>
+              <p class="card-text">{{ recipe.description|truncatewords:10 }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal for Recipe Details -->
+        <div class="modal fade" id="recipeModal{{ recipe.id }}" tabindex="-1" aria-labelledby="recipeModalLabel{{ recipe.id }}" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="recipeModalLabel{{ recipe.id }}">{{ recipe.recipe_name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <img src="{{ recipe.recipe_img.url }}" alt="{{ recipe.recipe_name }}" class="img-fluid mb-3">
+                <p><strong>Description:</strong> {{ recipe.description }}</p>
+                <p><strong>Food Type:</strong> {{ recipe.food_type }}</p>
+                <p><strong>Steps:</strong> {{ recipe.steps }}</p>
+                <p><strong>Created by:</strong> {{ recipe.user }}</p>
+                <p><strong>Created Time :</strong> {{ recipe.created_at }}</p>
+              </div>
+              <div class="modal-footer">
+                <a href="{% url 'edit' recipe.id %}" class="btn btn-warning">Edit</a>
+                <form method="POST" action="{% url 'delete' recipe.id %}" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12 text-center">
+          <p>No recipes found.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Recipe Manager. All rights reserved. | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <!-- Go to Top Button -->
+  <button class="go-to-top" onclick="scrollToTop()">&#8679;</button>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Smooth Scroll to Top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

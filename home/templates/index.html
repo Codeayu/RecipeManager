@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Recipe Manager{% endblock %}
+
+{% block content %}
+<header class="header">
+    <h1>Welcome to Recipe Manager</h1>
+    <p>Your ultimate destination to manage all your favorite recipes, log in, and start creating your personal recipe collection.</p>
+    {% if user.is_authenticated %}
+    <a href="{% url 'show_recepies' %}" class="btn">Get Started</a>
+    {% else %}
+    <a href="{% url 'login_us' %}" class="btn">Get Started</a>
+    {% endif %}
+</header>
+
+<main>
+    <section class="features">
+        <div class="feature">
+            <h2>Log In & Log Out</h2>
+            <p>Securely access your account to manage recipes at any time, with easy login and logout functionality.</p>
+        </div>
+        <div class="feature">
+            <h2>Add New Recipes</h2>
+            <p>Quickly add new recipes with all the details and categories you need, keeping your collection growing.</p>
+        </div>
+        <div class="feature">
+            <h2>Edit & Remove Recipes</h2>
+            <p>Modify or delete recipes easily to keep your collection current and accurate as you perfect them.</p>
+        </div>
+    </section>
+</main>
+{% endblock %}

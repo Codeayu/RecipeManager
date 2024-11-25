@@ -1,0 +1,202 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(to bottom right, #f8f5f0, #ffe0cc);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: calc(80px + 1em); /* Dynamically adjust with navbar height */
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    background-color: #ff7f50;
+    color: #fff;
+    padding: 1em 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Navbar Links */
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 1.5em;
+}
+
+/* Navbar Link Styling */
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Login Button Styling */
+.login-btn {
+    background-color: #8b0000;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #a52a2a;
+}
+
+/* Navbar Toggle for Mobile */
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.navbar-toggle span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+/* Show the Navbar Links on Mobile */
+.nav-links.open {
+    display: block;
+}
+
+/* Header */
+.header {
+    padding: 4em 2em;
+    background-color: #ff7f50;
+    color: #fff;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 8px;
+    margin: 5em auto 1em; /* Adjusted to center the header */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Centers content horizontally and vertically */
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5em;
+}
+
+.header p {
+    font-size: 1.2rem;
+    margin-bottom: 1em;
+}
+
+.btn {
+    padding: 0.8em 1.5em;
+    background-color: #8b0000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #a52a2a;
+}
+
+/* Features Section */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5em;
+    padding: 2em;
+    max-width: 1000px;
+    width: 100%;
+}
+
+.feature {
+    background-color: #fff8f0;
+    padding: 1.5em;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.feature h2 {
+    color: #ff7f50;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    padding: 1em 0;
+    background-color: #8b0000;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+}
+
+.footer p {
+    font-size: 0.9rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+    .navbar {
+        flex-direction: column;
+        padding: 1em;
+    }
+    .nav-links {
+        flex-direction: column;
+        gap: 1em;
+        display: none;
+        width: 100%;
+        text-align: center;
+    }
+    .navbar-toggle {
+        display: flex;
+    }
+    .logo {
+        font-size: 1.2rem;
+        margin-bottom: 1em;
+    }
+}
